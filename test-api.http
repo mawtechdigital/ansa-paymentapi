@@ -1,0 +1,87 @@
+### ============================================================
+### PAYMENT API - TEST ENDPOINTS
+### Use with VS Code REST Client extension
+### ============================================================
+
+@baseUrl = http://localhost:3000
+
+
+### ============================================================
+### API 1: INITIATE PAYMENT
+### ============================================================
+
+POST {{baseUrl}}/api/payment/initiate
+Content-Type: application/json
+
+{
+  "title": "Motor Insurance Payment",
+  "detail": "Annual motor insurance renewal",
+  "amount": 15000,
+  "customerEmail": "john@example.com",
+  "customerName": "John Doe",
+  "customerAddress": "123 Jalan Ampang, KL",
+  "customerIdentityNumber": "901234-56-7890",
+  "plateNumber": "WKL1234",
+  "insuranceName": "Allianz Motor Comprehensive",
+  "callbackUrl": "https://your-developer-site.com/webhook/payment"
+}
+
+
+### ============================================================
+### API 1b: SAME EMAIL = REUSE USER (new vehicle)
+### ============================================================
+
+POST {{baseUrl}}/api/payment/initiate
+Content-Type: application/json
+
+{
+  "title": "Motor Insurance Payment",
+  "detail": "Second vehicle",
+  "amount": 8500,
+  "customerEmail": "john@example.com",
+  "customerName": "John Doe",
+  "plateNumber": "BKE5678",
+  "insuranceName": "Zurich Motor Basic",
+  "callbackUrl": "https://your-developer-site.com/webhook/payment"
+}
+
+
+### ============================================================
+### API 2: SIMULATE RM CALLBACK (RM sends this automatically)
+### ============================================================
+
+POST {{baseUrl}}/api/payment/rm-callback
+Content-Type: application/json
+
+{
+  "data": {
+    "balanceAmount": 15000,
+    "createdAt": "2026-05-12T22:00:00Z",
+    "currencyType": "MYR",
+    "method": "FPX_MY",
+    "order": {
+      "id": "ANS-20260513-001",
+      "title": "Motor Insurance Payment",
+      "detail": "Annual motor insurance renewal",
+      "amount": 15000,
+      "additionalData": "plate:WKL1234|ins:Allianz Motor Comprehensive"
+    },
+    "payee": {},
+    "platform": "OPEN_API",
+    "referenceId": "1234567890",
+    "region": "MALAYSIA",
+    "status": "SUCCESS",
+    "store": {},
+    "transactionId": "230512345678901234567890",
+    "type": "WEB_PAYMENT",
+    "updatedAt": "2026-05-12T22:01:00Z"
+  },
+  "eventType": "PAYMENT_WEB_ONLINE"
+}
+
+
+### ============================================================
+### API 3: CHECK PAYMENT STATUS
+### ============================================================
+
+GET {{baseUrl}}/api/payment/status/ANS-20260513-001

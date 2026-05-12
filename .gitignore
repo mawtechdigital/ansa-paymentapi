@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+.env.sample
+.env.sandbox
+*.pem
