@@ -4,3 +4,5 @@ dist/
 .env.sample
 .env.sandbox
 *.pem
+.env.example
+.env
