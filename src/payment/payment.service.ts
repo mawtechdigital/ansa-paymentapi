@@ -63,7 +63,7 @@ export class PaymentService {
       redirectUrl: this.configService.getOrThrow('RM_REDIRECT_URL'),
       notifyUrl: this.configService.getOrThrow('RM_NOTIFY_URL'),
       layoutVersion: this.configService.get('RM_LAYOUT_VERSION', 'v4'),
-      method: ['FPX_MY'],
+      method: [],
     };
 
     // 4. Call Revenue Monster API
